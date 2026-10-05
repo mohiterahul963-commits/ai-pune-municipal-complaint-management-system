@@ -1,0 +1,3091 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>Pune Municipal Admin Dashboard</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #0b0f14;
+    color: #e8edf3;
+    min-height: 100vh;
+}
+
+
+/* ================= HEADER ================= */
+
+.header {
+
+    background: #111720;
+
+    border-bottom: 1px solid #27303b;
+
+    padding: 18px 28px;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 20px;
+
+    position: sticky;
+
+    top: 0;
+
+    z-index: 50;
+}
+
+.brand {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+}
+
+.logo {
+
+    width: 45px;
+
+    height: 45px;
+
+    border-radius: 12px;
+
+    background: #e50914;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 23px;
+
+    font-weight: bold;
+}
+
+.brand h1 {
+    font-size: 21px;
+}
+
+.brand p {
+
+    color: #8d98a6;
+
+    font-size: 12px;
+
+    margin-top: 3px;
+}
+
+.header-buttons {
+
+    display: flex;
+
+    gap: 10px;
+
+    align-items: center;
+}
+
+.refresh-btn {
+
+    background: #e50914;
+
+    color: white;
+
+    border: none;
+
+    padding: 11px 17px;
+
+    border-radius: 8px;
+
+    cursor: pointer;
+
+    font-weight: bold;
+}
+
+.refresh-btn:hover {
+    background: #ff1b26;
+}
+
+.audio-refresh-btn {
+
+    background: #1c2632;
+
+    color: white;
+
+    border: 1px solid #344150;
+
+    padding: 11px 17px;
+
+    border-radius: 8px;
+
+    cursor: pointer;
+
+    font-weight: bold;
+}
+
+.audio-refresh-btn:hover {
+    background: #273444;
+}
+
+
+/* ================= MAIN ================= */
+
+.container {
+
+    max-width: 1500px;
+
+    margin: auto;
+
+    padding: 28px;
+}
+
+
+/* ================= STATS ================= */
+
+.stats {
+
+    display: grid;
+
+    grid-template-columns: repeat(5, 1fr);
+
+    gap: 16px;
+
+    margin-bottom: 25px;
+}
+
+.stat-card {
+
+    background: #111720;
+
+    border: 1px solid #27303b;
+
+    border-radius: 13px;
+
+    padding: 20px;
+}
+
+.stat-title {
+
+    color: #8d98a6;
+
+    font-size: 13px;
+
+    margin-bottom: 10px;
+}
+
+.stat-value {
+
+    font-size: 29px;
+
+    font-weight: bold;
+}
+
+
+/* ================= AUDIO ================= */
+
+.audio-card {
+
+    background: #111720;
+
+    border: 1px solid #27303b;
+
+    border-radius: 13px;
+
+    margin-bottom: 25px;
+
+    overflow: hidden;
+}
+
+.audio-header {
+
+    padding: 18px;
+
+    border-bottom: 1px solid #27303b;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 15px;
+}
+
+.audio-header h2 {
+
+    font-size: 18px;
+}
+
+.audio-updated {
+
+    color: #7f8a98;
+
+    font-size: 12px;
+
+    text-align: right;
+}
+
+.audio-body {
+
+    padding: 20px;
+}
+
+.audio-description {
+
+    color: #8d98a6;
+
+    font-size: 13px;
+
+    margin-bottom: 15px;
+}
+
+.audio-player {
+
+    width: 100%;
+
+    height: 45px;
+}
+
+.audio-status {
+
+    margin-top: 12px;
+
+    color: #45d483;
+
+    font-size: 13px;
+}
+
+.audio-file {
+
+    margin-top: 7px;
+
+    color: #687483;
+
+    font-size: 11px;
+
+    word-break: break-all;
+}
+
+
+/* ================= CONTROLS ================= */
+
+.controls {
+
+    background: #111720;
+
+    border: 1px solid #27303b;
+
+    border-radius: 13px;
+
+    padding: 18px;
+
+    margin-bottom: 20px;
+
+    display: grid;
+
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+
+    gap: 12px;
+}
+
+.input,
+.select {
+
+    width: 100%;
+
+    background: #0b0f14;
+
+    color: #e8edf3;
+
+    border: 1px solid #303b48;
+
+    border-radius: 8px;
+
+    padding: 12px;
+
+    outline: none;
+}
+
+.input:focus,
+.select:focus {
+
+    border-color: #e50914;
+}
+
+
+/* ================= TABLE ================= */
+
+.table-container {
+
+    background: #111720;
+
+    border: 1px solid #27303b;
+
+    border-radius: 13px;
+
+    overflow: hidden;
+}
+
+.table-header {
+
+    padding: 18px;
+
+    border-bottom: 1px solid #27303b;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+}
+
+.table-header h2 {
+
+    font-size: 18px;
+}
+
+.last-updated {
+
+    color: #7f8a98;
+
+    font-size: 12px;
+}
+
+.table-wrapper {
+
+    overflow-x: auto;
+}
+
+table {
+
+    width: 100%;
+
+    border-collapse: collapse;
+
+    min-width: 1100px;
+}
+
+th {
+
+    text-align: left;
+
+    color: #8d98a6;
+
+    font-size: 12px;
+
+    text-transform: uppercase;
+
+    padding: 14px;
+
+    background: #0d1218;
+
+    border-bottom: 1px solid #27303b;
+}
+
+td {
+
+    padding: 14px;
+
+    border-bottom: 1px solid #202833;
+
+    vertical-align: middle;
+
+    font-size: 13px;
+}
+
+tr:hover {
+
+    background: #151c25;
+}
+
+
+/* ================= IMAGE ================= */
+
+.complaint-image {
+
+    width: 85px;
+
+    height: 60px;
+
+    object-fit: cover;
+
+    border-radius: 7px;
+
+    cursor: pointer;
+
+    border: 1px solid #303b48;
+
+    background: #0b0f14;
+}
+
+.no-image {
+
+    width: 85px;
+
+    height: 60px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background: #1a2029;
+
+    color: #687483;
+
+    border-radius: 7px;
+
+    font-size: 11px;
+}
+
+
+/* ================= BADGES ================= */
+
+.badge {
+
+    display: inline-block;
+
+    padding: 6px 9px;
+
+    border-radius: 20px;
+
+    font-size: 11px;
+
+    font-weight: bold;
+}
+
+.pending {
+
+    background: #3b2d08;
+
+    color: #ffc107;
+}
+
+.progress {
+
+    background: #102c45;
+
+    color: #42a5f5;
+}
+
+.solved {
+
+    background: #103522;
+
+    color: #45d483;
+}
+
+.rejected {
+
+    background: #3b1518;
+
+    color: #ff6872;
+}
+
+.category {
+
+    color: #ff5964;
+
+    font-weight: bold;
+}
+
+
+/* ================= STATUS ================= */
+
+.status-select {
+
+    background: #0b0f14;
+
+    color: white;
+
+    border: 1px solid #303b48;
+
+    padding: 8px;
+
+    border-radius: 7px;
+
+    margin-bottom: 7px;
+
+    width: 135px;
+}
+
+.update-btn {
+
+    width: 135px;
+
+    background: #e50914;
+
+    border: none;
+
+    color: white;
+
+    padding: 8px;
+
+    border-radius: 7px;
+
+    cursor: pointer;
+
+    font-weight: bold;
+}
+
+.update-btn:hover {
+
+    background: #ff1b26;
+}
+
+.update-btn:disabled {
+
+    opacity: 0.5;
+
+    cursor: not-allowed;
+}
+
+
+/* ================= MOBILE CARDS ================= */
+
+.mobile-cards {
+
+    display: none;
+}
+
+.complaint-card {
+
+    background: #111720;
+
+    border: 1px solid #27303b;
+
+    border-radius: 13px;
+
+    margin-bottom: 15px;
+
+    overflow: hidden;
+}
+
+.card-image {
+
+    width: 100%;
+
+    height: 210px;
+
+    object-fit: cover;
+
+    cursor: pointer;
+}
+
+.card-body {
+
+    padding: 16px;
+}
+
+.card-top {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    gap: 10px;
+
+    margin-bottom: 13px;
+}
+
+.card-id {
+
+    font-weight: bold;
+
+    font-size: 13px;
+
+    color: #ff5964;
+}
+
+.info-row {
+
+    margin: 9px 0;
+
+    font-size: 13px;
+}
+
+.info-label {
+
+    color: #7f8a98;
+
+    display: block;
+
+    font-size: 11px;
+
+    margin-bottom: 3px;
+}
+
+.mobile-status {
+
+    width: 100%;
+
+    margin-top: 10px;
+}
+
+.mobile-update {
+
+    width: 100%;
+
+    margin-top: 5px;
+}
+
+
+/* ================= EMPTY / LOADING ================= */
+
+.message {
+
+    padding: 50px;
+
+    text-align: center;
+
+    color: #7f8a98;
+}
+
+.spinner {
+
+    width: 30px;
+
+    height: 30px;
+
+    border: 3px solid #303b48;
+
+    border-top: 3px solid #e50914;
+
+    border-radius: 50%;
+
+    animation: spin 0.8s linear infinite;
+
+    margin: auto;
+}
+
+@keyframes spin {
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+
+/* ================= TOAST ================= */
+
+.toast-container {
+
+    position: fixed;
+
+    top: 80px;
+
+    right: 20px;
+
+    z-index: 100;
+}
+
+.toast {
+
+    min-width: 270px;
+
+    padding: 14px 17px;
+
+    margin-bottom: 10px;
+
+    border-radius: 9px;
+
+    background: #19212b;
+
+    border: 1px solid #303b48;
+
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+
+    animation: slideIn 0.25s ease;
+
+    font-size: 13px;
+}
+
+.toast.success {
+
+    border-left: 4px solid #45d483;
+}
+
+.toast.error {
+
+    border-left: 4px solid #ff5964;
+}
+
+@keyframes slideIn {
+
+    from {
+
+        transform: translateX(30px);
+
+        opacity: 0;
+
+    }
+
+    to {
+
+        transform: translateX(0);
+
+        opacity: 1;
+
+    }
+}
+
+
+/* ================= MODAL ================= */
+
+.modal {
+
+    display: none;
+
+    position: fixed;
+
+    inset: 0;
+
+    background: rgba(0,0,0,0.88);
+
+    z-index: 200;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 20px;
+}
+
+.modal.show {
+
+    display: flex;
+}
+
+.modal-content {
+
+    max-width: 1000px;
+
+    max-height: 90vh;
+
+    position: relative;
+}
+
+.modal-image {
+
+    max-width: 100%;
+
+    max-height: 85vh;
+
+    border-radius: 10px;
+
+    display: block;
+}
+
+.close-modal {
+
+    position: absolute;
+
+    right: -10px;
+
+    top: -45px;
+
+    width: 35px;
+
+    height: 35px;
+
+    border-radius: 50%;
+
+    border: none;
+
+    background: #e50914;
+
+    color: white;
+
+    font-size: 20px;
+
+    cursor: pointer;
+}
+
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 1100px) {
+
+    .stats {
+
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .controls {
+
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+
+@media (max-width: 700px) {
+
+    .header {
+
+        padding: 15px;
+    }
+
+    .brand h1 {
+
+        font-size: 16px;
+    }
+
+    .brand p {
+
+        display: none;
+    }
+
+    .header-buttons {
+
+        flex-direction: column;
+
+        gap: 6px;
+
+        align-items: stretch;
+    }
+
+    .refresh-btn,
+    .audio-refresh-btn {
+
+        padding: 8px 10px;
+
+        font-size: 11px;
+    }
+
+    .container {
+
+        padding: 15px;
+    }
+
+    .stats {
+
+        grid-template-columns: repeat(2, 1fr);
+
+        gap: 10px;
+    }
+
+    .stat-card {
+
+        padding: 15px;
+    }
+
+    .stat-value {
+
+        font-size: 23px;
+    }
+
+    .controls {
+
+        grid-template-columns: 1fr;
+    }
+
+    .audio-header {
+
+        flex-direction: column;
+
+        align-items: flex-start;
+    }
+
+    .audio-updated {
+
+        text-align: left;
+    }
+
+    .table-container {
+
+        display: none;
+    }
+
+    .mobile-cards {
+
+        display: block;
+    }
+
+    .toast-container {
+
+        left: 15px;
+
+        right: 15px;
+    }
+
+    .toast {
+
+        min-width: auto;
+    }
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- ================= HEADER ================= -->
+
+<header class="header">
+
+    <div class="brand">
+
+        <div class="logo">
+            P
+        </div>
+
+        <div>
+
+            <h1>
+                Pune Municipal Admin
+            </h1>
+
+            <p>
+                Municipal Complaint Management System
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="header-buttons">
+
+        <button
+            class="audio-refresh-btn"
+            onclick="loadLatestAudio()"
+        >
+            🔊 Refresh Audio
+        </button>
+
+
+        <button
+            class="refresh-btn"
+            onclick="loadComplaints()"
+        >
+            ↻ Refresh
+        </button>
+
+    </div>
+
+</header>
+
+
+
+<main class="container">
+
+
+<!-- ================= STATS ================= -->
+
+<section class="stats">
+
+
+    <div class="stat-card">
+
+        <div class="stat-title">
+            Total Complaints
+        </div>
+
+        <div
+            class="stat-value"
+            id="totalCount"
+        >
+            0
+        </div>
+
+    </div>
+
+
+    <div class="stat-card">
+
+        <div class="stat-title">
+            Pending
+        </div>
+
+        <div
+            class="stat-value"
+            id="pendingCount"
+        >
+            0
+        </div>
+
+    </div>
+
+
+    <div class="stat-card">
+
+        <div class="stat-title">
+            In Progress
+        </div>
+
+        <div
+            class="stat-value"
+            id="progressCount"
+        >
+            0
+        </div>
+
+    </div>
+
+
+    <div class="stat-card">
+
+        <div class="stat-title">
+            Solved
+        </div>
+
+        <div
+            class="stat-value"
+            id="solvedCount"
+        >
+            0
+        </div>
+
+    </div>
+
+
+    <div class="stat-card">
+
+        <div class="stat-title">
+            Rejected
+        </div>
+
+        <div
+            class="stat-value"
+            id="rejectedCount"
+        >
+            0
+        </div>
+
+    </div>
+
+
+</section>
+
+
+
+<!-- ================= MUNICIPAL AUDIO ================= -->
+
+<section class="audio-card">
+
+
+    <div class="audio-header">
+
+        <h2>
+            🔊 Municipal Audio Update
+        </h2>
+
+
+        <div
+            class="audio-updated"
+            id="audioUpdated"
+        >
+            Loading audio...
+        </div>
+
+    </div>
+
+
+    <div class="audio-body">
+
+        <div class="audio-description">
+
+            Latest automatic municipal complaint
+            update generated by Amazon Polly.
+
+        </div>
+
+
+        <audio
+            id="municipalAudio"
+            class="audio-player"
+            controls
+        >
+
+            Your browser does not support
+            the audio player.
+
+        </audio>
+
+
+        <div
+            class="audio-status"
+            id="audioStatus"
+        >
+            Loading latest municipal audio...
+
+        </div>
+
+
+        <div
+            class="audio-file"
+            id="audioFile"
+        >
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- ================= SEARCH / FILTER ================= -->
+
+<section class="controls">
+
+
+    <input
+        type="text"
+        id="searchInput"
+        class="input"
+        placeholder="Search complaint ID, name, mobile, email, description..."
+        oninput="renderComplaints()"
+    >
+
+
+    <select
+        id="statusFilter"
+        class="select"
+        onchange="renderComplaints()"
+    >
+
+        <option value="">
+            All Status
+        </option>
+
+        <option value="PENDING">
+            Pending
+        </option>
+
+        <option value="IN_PROGRESS">
+            In Progress
+        </option>
+
+        <option value="SOLVED">
+            Solved
+        </option>
+
+        <option value="REJECTED">
+            Rejected
+        </option>
+
+    </select>
+
+
+    <select
+        id="locationFilter"
+        class="select"
+        onchange="renderComplaints()"
+    >
+
+        <option value="">
+            All Locations
+        </option>
+
+    </select>
+
+
+    <select
+        id="categoryFilter"
+        class="select"
+        onchange="renderComplaints()"
+    >
+
+        <option value="">
+            All Categories
+        </option>
+
+    </select>
+
+
+</section>
+
+
+
+<!-- ================= DESKTOP TABLE ================= -->
+
+<section class="table-container">
+
+
+    <div class="table-header">
+
+        <h2>
+            Complaint Management
+        </h2>
+
+
+        <div
+            class="last-updated"
+            id="lastUpdated"
+        >
+            Loading...
+        </div>
+
+    </div>
+
+
+    <div class="table-wrapper">
+
+
+        <table>
+
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        Image
+                    </th>
+
+                    <th>
+                        Complaint
+                    </th>
+
+                    <th>
+                        Citizen
+                    </th>
+
+                    <th>
+                        Location
+                    </th>
+
+                    <th>
+                        Category
+                    </th>
+
+                    <th>
+                        Status
+                    </th>
+
+                    <th>
+                        Update
+                    </th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody
+                id="complaintTableBody"
+            >
+
+                <tr>
+
+                    <td colspan="7">
+
+                        <div class="message">
+
+                            <div class="spinner"></div>
+
+                            <p style="margin-top:15px;">
+                                Loading complaints...
+                            </p>
+
+                        </div>
+
+                    </td>
+
+                </tr>
+
+            </tbody>
+
+
+        </table>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- ================= MOBILE CARDS ================= -->
+
+<section
+    class="mobile-cards"
+    id="mobileCards"
+>
+</section>
+
+
+</main>
+
+
+
+<!-- ================= IMAGE MODAL ================= -->
+
+<div
+    class="modal"
+    id="imageModal"
+    onclick="closeImageModal()"
+>
+
+
+    <div
+        class="modal-content"
+        onclick="event.stopPropagation()"
+    >
+
+
+        <button
+            class="close-modal"
+            onclick="closeImageModal()"
+        >
+            ×
+        </button>
+
+
+        <img
+            id="modalImage"
+            class="modal-image"
+            src=""
+            alt="Complaint image"
+        >
+
+
+    </div>
+
+
+</div>
+
+
+
+<!-- ================= TOAST ================= -->
+
+<div
+    class="toast-container"
+    id="toastContainer"
+>
+</div>
+
+
+
+<script>
+
+
+/* =========================================================
+   CONFIGURATION
+========================================================= */
+
+
+/* COMPLAINT API */
+
+const API_URL =
+    "https://n7pjpuzjd0.execute-api.ap-south-1.amazonaws.com/dev/complaints";
+
+
+/* AUDIO API */
+
+const AUDIO_API_URL =
+    "https://07mrw91vfd.execute-api.ap-south-1.amazonaws.com/dev/admin/audio/latest";
+
+
+
+/* =========================================================
+   GLOBAL DATA
+========================================================= */
+
+let complaints = [];
+
+
+
+/* =========================================================
+   INITIAL LOAD
+========================================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        loadComplaints();
+
+        loadLatestAudio();
+
+    }
+);
+
+
+
+/* =========================================================
+   LOAD LATEST MUNICIPAL AUDIO
+========================================================= */
+
+async function loadLatestAudio() {
+
+
+    const audio =
+        document.getElementById(
+            "municipalAudio"
+        );
+
+
+    const audioStatus =
+        document.getElementById(
+            "audioStatus"
+        );
+
+
+    const audioUpdated =
+        document.getElementById(
+            "audioUpdated"
+        );
+
+
+    const audioFile =
+        document.getElementById(
+            "audioFile"
+        );
+
+
+    try {
+
+
+        audioStatus.textContent =
+            "Loading latest municipal audio...";
+
+
+        audioUpdated.textContent =
+            "Loading...";
+
+
+        audioFile.textContent =
+            "";
+
+
+        const response =
+            await fetch(
+                AUDIO_API_URL,
+                {
+                    method: "GET"
+                }
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Audio API returned HTTP " +
+                response.status
+            );
+
+        }
+
+
+        const data =
+            await response.json();
+
+
+        console.log(
+            "Latest audio response:",
+            data
+        );
+
+
+        if (!data.audioUrl) {
+
+            throw new Error(
+                "Audio URL was not returned by API."
+            );
+
+        }
+
+
+        /*
+         * Set the fresh presigned S3 URL
+         */
+
+        audio.src =
+            data.audioUrl;
+
+
+        audio.load();
+
+
+        audioStatus.textContent =
+            "✓ Latest municipal audio is ready to play.";
+
+
+        if (data.audioKey) {
+
+            audioFile.textContent =
+                "File: " +
+                data.audioKey;
+
+        }
+
+
+        if (data.lastModified) {
+
+            audioUpdated.textContent =
+                "Updated " +
+                new Date(
+                    data.lastModified
+                ).toLocaleString(
+                    "en-IN",
+                    {
+                        dateStyle: "medium",
+                        timeStyle: "short"
+                    }
+                );
+
+        }
+        else {
+
+            audioUpdated.textContent =
+                "Latest audio available";
+
+        }
+
+
+    }
+    catch (error) {
+
+
+        console.error(
+            "Audio loading error:",
+            error
+        );
+
+
+        audio.removeAttribute(
+            "src"
+        );
+
+
+        audio.load();
+
+
+        audioStatus.textContent =
+            "✕ Unable to load municipal audio.";
+
+
+        audioUpdated.textContent =
+            "Audio unavailable";
+
+
+        audioFile.textContent =
+            error.message || "";
+
+    }
+
+}
+
+
+
+/* =========================================================
+   AUTOMATIC AUDIO REFRESH
+========================================================= */
+
+/*
+ * Refresh the latest audio every 5 minutes.
+ *
+ * This gets a fresh presigned S3 URL.
+ */
+
+setInterval(
+    function () {
+
+        loadLatestAudio();
+
+    },
+    5 * 60 * 1000
+);
+
+
+
+/* =========================================================
+   LOAD COMPLAINTS
+========================================================= */
+
+async function loadComplaints() {
+
+
+    showLoading();
+
+
+    try {
+
+
+        const response =
+            await fetch(API_URL);
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "API returned HTTP " +
+                response.status
+            );
+
+        }
+
+
+        const data =
+            await response.json();
+
+
+        console.log(
+            "API response:",
+            data
+        );
+
+
+        if (Array.isArray(data)) {
+
+            complaints =
+                data;
+
+        }
+        else if (
+            Array.isArray(
+                data.complaints
+            )
+        ) {
+
+            complaints =
+                data.complaints;
+
+        }
+        else if (
+            Array.isArray(
+                data.items
+            )
+        ) {
+
+            complaints =
+                data.items;
+
+        }
+        else {
+
+            complaints = [];
+
+        }
+
+
+        updateStats();
+
+        populateFilters();
+
+        renderComplaints();
+
+
+        document.getElementById(
+            "lastUpdated"
+        ).textContent =
+            "Updated " +
+            new Date().toLocaleTimeString();
+
+    }
+
+
+    catch (error) {
+
+
+        console.error(
+            error
+        );
+
+
+        showError(
+            "Unable to load complaints. Check API/CORS."
+        );
+
+
+        complaints = [];
+
+
+        updateStats();
+
+        renderComplaints();
+
+    }
+
+}
+
+
+
+/* =========================================================
+   LOADING STATE
+========================================================= */
+
+function showLoading() {
+
+
+    document.getElementById(
+        "complaintTableBody"
+    ).innerHTML = `
+
+        <tr>
+
+            <td colspan="7">
+
+                <div class="message">
+
+                    <div class="spinner"></div>
+
+                    <p style="margin-top:15px;">
+                        Loading complaints...
+                    </p>
+
+                </div>
+
+            </td>
+
+        </tr>
+
+    `;
+
+
+    document.getElementById(
+        "mobileCards"
+    ).innerHTML = `
+
+        <div class="message">
+
+            <div class="spinner"></div>
+
+            <p style="margin-top:15px;">
+                Loading complaints...
+            </p>
+
+        </div>
+
+    `;
+
+}
+
+
+
+/* =========================================================
+   STATS
+========================================================= */
+
+function updateStats() {
+
+
+    const total =
+        complaints.length;
+
+
+    const pending =
+        complaints.filter(
+            c => c.status === "PENDING"
+        ).length;
+
+
+    const progress =
+        complaints.filter(
+            c => c.status === "IN_PROGRESS"
+        ).length;
+
+
+    const solved =
+        complaints.filter(
+            c => c.status === "SOLVED"
+        ).length;
+
+
+    const rejected =
+        complaints.filter(
+            c => c.status === "REJECTED"
+        ).length;
+
+
+    document.getElementById(
+        "totalCount"
+    ).textContent =
+        total;
+
+
+    document.getElementById(
+        "pendingCount"
+    ).textContent =
+        pending;
+
+
+    document.getElementById(
+        "progressCount"
+    ).textContent =
+        progress;
+
+
+    document.getElementById(
+        "solvedCount"
+    ).textContent =
+        solved;
+
+
+    document.getElementById(
+        "rejectedCount"
+    ).textContent =
+        rejected;
+
+}
+
+
+
+/* =========================================================
+   FILTER OPTIONS
+========================================================= */
+
+function populateFilters() {
+
+
+    const locations =
+        [
+            ...new Set(
+                complaints
+                    .map(
+                        c => c.location
+                    )
+                    .filter(Boolean)
+            )
+        ]
+        .sort();
+
+
+    const categories =
+        [
+            ...new Set(
+                complaints
+                    .map(
+                        c => c.category
+                    )
+                    .filter(Boolean)
+            )
+        ]
+        .sort();
+
+
+    const locationFilter =
+        document.getElementById(
+            "locationFilter"
+        );
+
+
+    const categoryFilter =
+        document.getElementById(
+            "categoryFilter"
+        );
+
+
+    const currentLocation =
+        locationFilter.value;
+
+
+    const currentCategory =
+        categoryFilter.value;
+
+
+    locationFilter.innerHTML =
+        `<option value="">
+            All Locations
+        </option>`;
+
+
+    locations.forEach(
+        location => {
+
+            locationFilter.innerHTML +=
+                `
+                <option value="${escapeHTML(location)}">
+                    ${escapeHTML(location)}
+                </option>
+                `;
+
+        }
+    );
+
+
+    categoryFilter.innerHTML =
+        `<option value="">
+            All Categories
+        </option>`;
+
+
+    categories.forEach(
+        category => {
+
+            categoryFilter.innerHTML +=
+                `
+                <option value="${escapeHTML(category)}">
+                    ${escapeHTML(category)}
+                </option>
+                `;
+
+        }
+    );
+
+
+    locationFilter.value =
+        currentLocation;
+
+
+    categoryFilter.value =
+        currentCategory;
+
+}
+
+
+
+/* =========================================================
+   FILTER + SEARCH
+========================================================= */
+
+function getFilteredComplaints() {
+
+
+    const search =
+        document.getElementById(
+            "searchInput"
+        )
+        .value
+        .trim()
+        .toLowerCase();
+
+
+    const status =
+        document.getElementById(
+            "statusFilter"
+        ).value;
+
+
+    const location =
+        document.getElementById(
+            "locationFilter"
+        ).value;
+
+
+    const category =
+        document.getElementById(
+            "categoryFilter"
+        ).value;
+
+
+    return complaints.filter(
+        complaint => {
+
+
+            const searchableText = [
+
+                complaint.complaintId,
+
+                complaint.name,
+
+                complaint.mobile,
+
+                complaint.email,
+
+                complaint.description,
+
+                complaint.location,
+
+                complaint.category
+
+            ]
+            .filter(Boolean)
+            .join(" ")
+            .toLowerCase();
+
+
+            const matchesSearch =
+                !search ||
+                searchableText.includes(
+                    search
+                );
+
+
+            const matchesStatus =
+                !status ||
+                complaint.status === status;
+
+
+            const matchesLocation =
+                !location ||
+                complaint.location === location;
+
+
+            const matchesCategory =
+                !category ||
+                complaint.category === category;
+
+
+            return (
+                matchesSearch &&
+                matchesStatus &&
+                matchesLocation &&
+                matchesCategory
+            );
+
+        }
+    );
+
+}
+
+
+
+/* =========================================================
+   RENDER
+========================================================= */
+
+function renderComplaints() {
+
+
+    const filtered =
+        getFilteredComplaints();
+
+
+    renderDesktopTable(
+        filtered
+    );
+
+
+    renderMobileCards(
+        filtered
+    );
+
+}
+
+
+
+/* =========================================================
+   DESKTOP TABLE
+========================================================= */
+
+function renderDesktopTable(
+    data
+) {
+
+
+    const tbody =
+        document.getElementById(
+            "complaintTableBody"
+        );
+
+
+    if (data.length === 0) {
+
+
+        tbody.innerHTML = `
+
+            <tr>
+
+                <td colspan="7">
+
+                    <div class="message">
+                        No complaints found.
+                    </div>
+
+                </td>
+
+            </tr>
+
+        `;
+
+
+        return;
+
+    }
+
+
+    tbody.innerHTML =
+        data.map(
+            complaint => {
+
+
+                const id =
+                    escapeHTML(
+                        complaint.complaintId ||
+                        ""
+                    );
+
+
+                const image =
+                    complaint.imageUrl
+
+                    ?
+
+                    `
+                    <img
+                        class="complaint-image"
+                        src="${escapeAttribute(complaint.imageUrl)}"
+                        alt="Complaint"
+                        onclick="openImage('${escapeAttribute(complaint.imageUrl)}')"
+                        onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+                    >
+
+                    <div
+                        class="no-image"
+                        style="display:none;"
+                    >
+                        Image unavailable
+                    </div>
+                    `
+
+                    :
+
+                    `
+                    <div class="no-image">
+                        No image
+                    </div>
+                    `;
+
+
+                const statusClass =
+                    getStatusClass(
+                        complaint.status
+                    );
+
+
+                return `
+
+                    <tr>
+
+                        <td>
+                            ${image}
+                        </td>
+
+
+                        <td>
+
+                            <strong>
+                                ${id}
+                            </strong>
+
+
+                            <div style="
+                                margin-top:7px;
+                                color:#8d98a6;
+                                max-width:260px;
+                            ">
+
+                                ${escapeHTML(
+                                    complaint.description ||
+                                    "No description"
+                                )}
+
+                            </div>
+
+
+                            <div style="
+                                margin-top:6px;
+                                color:#687483;
+                                font-size:11px;
+                            ">
+
+                                ${formatDate(
+                                    complaint.createdAt
+                                )}
+
+                            </div>
+
+                        </td>
+
+
+                        <td>
+
+                            <strong>
+
+                                ${escapeHTML(
+                                    complaint.name ||
+                                    "-"
+                                )}
+
+                            </strong>
+
+
+                            <div style="
+                                margin-top:5px;
+                                color:#8d98a6;
+                            ">
+
+                                ${escapeHTML(
+                                    complaint.mobile ||
+                                    "-"
+                                )}
+
+                            </div>
+
+
+                            <div style="
+                                margin-top:4px;
+                                color:#8d98a6;
+                            ">
+
+                                ${escapeHTML(
+                                    complaint.email ||
+                                    "-"
+                                )}
+
+                            </div>
+
+                        </td>
+
+
+                        <td>
+
+                            ${escapeHTML(
+                                complaint.location ||
+                                "-"
+                            )}
+
+                        </td>
+
+
+                        <td>
+
+                            <span class="category">
+
+                                ${escapeHTML(
+                                    complaint.category ||
+                                    "PENDING"
+                                )}
+
+                            </span>
+
+                        </td>
+
+
+                        <td>
+
+                            <span class="badge ${statusClass}">
+
+                                ${formatStatus(
+                                    complaint.status
+                                )}
+
+                            </span>
+
+                        </td>
+
+
+                        <td>
+
+                            ${statusControls(
+                                complaint
+                            )}
+
+                        </td>
+
+                    </tr>
+
+                `;
+
+            }
+        )
+        .join("");
+
+}
+
+
+
+/* =========================================================
+   MOBILE CARDS
+========================================================= */
+
+function renderMobileCards(
+    data
+) {
+
+
+    const container =
+        document.getElementById(
+            "mobileCards"
+        );
+
+
+    if (data.length === 0) {
+
+
+        container.innerHTML = `
+
+            <div class="message">
+                No complaints found.
+            </div>
+
+        `;
+
+
+        return;
+
+    }
+
+
+    container.innerHTML =
+        data.map(
+            complaint => {
+
+
+                const image =
+                    complaint.imageUrl
+
+                    ?
+
+                    `
+                    <img
+                        src="${escapeAttribute(complaint.imageUrl)}"
+                        class="card-image"
+                        alt="Complaint image"
+                        onclick="openImage('${escapeAttribute(complaint.imageUrl)}')"
+                        onerror="this.style.display='none';"
+                    >
+                    `
+
+                    :
+
+                    "";
+
+
+                return `
+
+                    <div class="complaint-card">
+
+                        ${image}
+
+
+                        <div class="card-body">
+
+
+                            <div class="card-top">
+
+
+                                <div class="card-id">
+
+                                    ${escapeHTML(
+                                        complaint.complaintId ||
+                                        "-"
+                                    )}
+
+                                </div>
+
+
+                                <span class="badge ${getStatusClass(complaint.status)}">
+
+                                    ${formatStatus(
+                                        complaint.status
+                                    )}
+
+                                </span>
+
+
+                            </div>
+
+
+                            <div class="info-row">
+
+                                <span class="info-label">
+                                    Category
+                                </span>
+
+
+                                <strong class="category">
+
+                                    ${escapeHTML(
+                                        complaint.category ||
+                                        "-"
+                                    )}
+
+                                </strong>
+
+                            </div>
+
+
+                            <div class="info-row">
+
+                                <span class="info-label">
+                                    Location
+                                </span>
+
+                                ${escapeHTML(
+                                    complaint.location ||
+                                    "-"
+                                )}
+
+                            </div>
+
+
+                            <div class="info-row">
+
+                                <span class="info-label">
+                                    Citizen
+                                </span>
+
+                                ${escapeHTML(
+                                    complaint.name ||
+                                    "-"
+                                )}
+
+                            </div>
+
+
+                            <div class="info-row">
+
+                                <span class="info-label">
+                                    Mobile
+                                </span>
+
+                                ${escapeHTML(
+                                    complaint.mobile ||
+                                    "-"
+                                )}
+
+                            </div>
+
+
+                            <div class="info-row">
+
+                                <span class="info-label">
+                                    Description
+                                </span>
+
+                                ${escapeHTML(
+                                    complaint.description ||
+                                    "-"
+                                )}
+
+                            </div>
+
+
+                            <div class="info-row">
+
+                                <span class="info-label">
+                                    Created
+                                </span>
+
+                                ${formatDate(
+                                    complaint.createdAt
+                                )}
+
+                            </div>
+
+
+                            <div class="mobile-status">
+
+                                ${statusControls(
+                                    complaint,
+                                    true
+                                )}
+
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+                `;
+
+            }
+        )
+        .join("");
+
+}
+
+
+
+/* =========================================================
+   STATUS CONTROLS
+========================================================= */
+
+function statusControls(
+    complaint,
+    mobile = false
+) {
+
+
+    const id =
+        escapeAttribute(
+            complaint.complaintId
+        );
+
+
+    return `
+
+        <select
+            class="status-select ${mobile ? "mobile-status" : ""}"
+            id="status-${id}"
+        >
+
+            <option
+                value="PENDING"
+                ${complaint.status === "PENDING"
+                    ? "selected"
+                    : ""}
+            >
+                Pending
+            </option>
+
+
+            <option
+                value="IN_PROGRESS"
+                ${complaint.status === "IN_PROGRESS"
+                    ? "selected"
+                    : ""}
+            >
+                In Progress
+            </option>
+
+
+            <option
+                value="SOLVED"
+                ${complaint.status === "SOLVED"
+                    ? "selected"
+                    : ""}
+            >
+                Solved
+            </option>
+
+
+            <option
+                value="REJECTED"
+                ${complaint.status === "REJECTED"
+                    ? "selected"
+                    : ""}
+            >
+                Rejected
+            </option>
+
+        </select>
+
+
+        <button
+            class="update-btn ${mobile ? "mobile-update" : ""}"
+            onclick="updateStatus('${id}')"
+        >
+            Update Status
+        </button>
+
+    `;
+
+}
+
+
+
+/* =========================================================
+   UPDATE STATUS
+========================================================= */
+
+async function updateStatus(
+    complaintId
+) {
+
+
+    const select =
+        document.getElementById(
+            "status-" +
+            complaintId
+        );
+
+
+    if (!select) {
+
+
+        showError(
+            "Status selector not found."
+        );
+
+
+        return;
+
+    }
+
+
+    const newStatus =
+        select.value;
+
+
+    const button =
+        select.nextElementSibling;
+
+
+    if (button) {
+
+
+        button.disabled =
+            true;
+
+
+        button.textContent =
+            "Updating...";
+
+    }
+
+
+    try {
+
+
+        const response =
+            await fetch(
+                API_URL +
+                "/" +
+                encodeURIComponent(
+                    complaintId
+                ),
+                {
+
+                    method: "PUT",
+
+                    headers: {
+
+                        "Content-Type":
+                            "application/json"
+
+                    },
+
+                    body:
+                        JSON.stringify({
+                            status:
+                                newStatus
+                        })
+
+                }
+            );
+
+
+        if (!response.ok) {
+
+
+            const errorText =
+                await response.text();
+
+
+            throw new Error(
+                errorText ||
+                "HTTP " +
+                response.status
+            );
+
+        }
+
+
+        showSuccess(
+            "Complaint " +
+            complaintId +
+            " updated to " +
+            formatStatus(
+                newStatus
+            )
+        );
+
+
+        await loadComplaints();
+
+    }
+
+
+    catch (error) {
+
+
+        console.error(
+            error
+        );
+
+
+        showError(
+            "Status update failed."
+        );
+
+    }
+
+
+    finally {
+
+
+        if (button) {
+
+
+            button.disabled =
+                false;
+
+
+            button.textContent =
+                "Update Status";
+
+        }
+
+    }
+
+}
+
+
+
+/* =========================================================
+   IMAGE MODAL
+========================================================= */
+
+function openImage(
+    url
+) {
+
+
+    if (!url) {
+
+        return;
+
+    }
+
+
+    document.getElementById(
+        "modalImage"
+    ).src =
+        url;
+
+
+    document.getElementById(
+        "imageModal"
+    ).classList.add(
+        "show"
+    );
+
+}
+
+
+
+function closeImageModal() {
+
+
+    document.getElementById(
+        "imageModal"
+    ).classList.remove(
+        "show"
+    );
+
+
+    document.getElementById(
+        "modalImage"
+    ).src =
+        "";
+
+}
+
+
+
+/* =========================================================
+   STATUS HELPERS
+========================================================= */
+
+function getStatusClass(
+    status
+) {
+
+
+    switch (status) {
+
+
+        case "PENDING":
+
+            return "pending";
+
+
+        case "IN_PROGRESS":
+
+            return "progress";
+
+
+        case "SOLVED":
+
+            return "solved";
+
+
+        case "REJECTED":
+
+            return "rejected";
+
+
+        default:
+
+            return "pending";
+
+    }
+
+}
+
+
+
+function formatStatus(
+    status
+) {
+
+
+    switch (status) {
+
+
+        case "IN_PROGRESS":
+
+            return "In Progress";
+
+
+        case "PENDING":
+
+            return "Pending";
+
+
+        case "SOLVED":
+
+            return "Solved";
+
+
+        case "REJECTED":
+
+            return "Rejected";
+
+
+        default:
+
+            return status ||
+                "Unknown";
+
+    }
+
+}
+
+
+
+/* =========================================================
+   DATE
+========================================================= */
+
+function formatDate(
+    dateString
+) {
+
+
+    if (!dateString) {
+
+        return "-";
+
+    }
+
+
+    const date =
+        new Date(
+            dateString
+        );
+
+
+    if (
+        isNaN(
+            date.getTime()
+        )
+    ) {
+
+
+        return escapeHTML(
+            dateString
+        );
+
+    }
+
+
+    return date.toLocaleString(
+        "en-IN",
+        {
+
+            dateStyle:
+                "medium",
+
+            timeStyle:
+                "short"
+
+        }
+    );
+
+}
+
+
+
+/* =========================================================
+   SECURITY
+========================================================= */
+
+function escapeHTML(
+    value
+) {
+
+
+    if (
+        value === null ||
+        value === undefined
+    ) {
+
+        return "";
+
+    }
+
+
+    return String(value)
+
+        .replaceAll(
+            "&",
+            "&amp;"
+        )
+
+        .replaceAll(
+            "<",
+            "&lt;"
+        )
+
+        .replaceAll(
+            ">",
+            "&gt;"
+        )
+
+        .replaceAll(
+            '"',
+            "&quot;"
+        )
+
+        .replaceAll(
+            "'",
+            "&#039;"
+        );
+
+}
+
+
+
+function escapeAttribute(
+    value
+) {
+
+    return escapeHTML(
+        value
+    )
+
+    .replaceAll(
+        "\n",
+        ""
+    )
+
+    .replaceAll(
+        "\r",
+        ""
+    );
+
+}
+
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+function showSuccess(
+    message
+) {
+
+    showToast(
+        message,
+        "success"
+    );
+
+}
+
+
+
+function showError(
+    message
+) {
+
+    showToast(
+        message,
+        "error"
+    );
+
+}
+
+
+
+function showToast(
+    message,
+    type
+) {
+
+
+    const container =
+        document.getElementById(
+            "toastContainer"
+        );
+
+
+    const toast =
+        document.createElement(
+            "div"
+        );
+
+
+    toast.className =
+        "toast " +
+        type;
+
+
+    toast.textContent =
+        message;
+
+
+    container.appendChild(
+        toast
+    );
+
+
+    setTimeout(
+        function () {
+
+            toast.remove();
+
+        },
+        4000
+    );
+
+}
+
+
+
+/* =========================================================
+   ESC CLOSE MODAL
+========================================================= */
+
+document.addEventListener(
+    "keydown",
+    function (event) {
+
+
+        if (
+            event.key ===
+            "Escape"
+        ) {
+
+
+            closeImageModal();
+
+        }
+
+    }
+);
+
+
+</script>
+
+</body>
+
+</html>

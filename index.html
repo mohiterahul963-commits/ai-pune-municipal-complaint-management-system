@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Pune Municipal Complaint Portal</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #0b0f14;
+            color: #ffffff;
+            min-height: 100vh;
+        }
+
+        /* HEADER */
+
+        header {
+            background: #111821;
+            border-bottom: 1px solid #27313d;
+            padding: 18px 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .logo-box {
+            width: 48px;
+            height: 48px;
+            background: #e50914;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .logo h1 {
+            font-size: 21px;
+        }
+
+        .logo p {
+            color: #8d9aaa;
+            font-size: 13px;
+            margin-top: 4px;
+        }
+
+        .admin-link {
+            background: #1c2632;
+            color: #ffffff;
+            padding: 10px 18px;
+            border-radius: 8px;
+            text-decoration: none;
+            border: 1px solid #344150;
+        }
+
+        /* MAIN */
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .hero h2 {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .hero p {
+            color: #9ba8b7;
+            line-height: 1.6;
+        }
+
+        /* FORM CARD */
+
+        .card {
+            background: #111821;
+            border: 1px solid #27313d;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+
+        .section-title {
+            font-size: 19px;
+            margin-bottom: 22px;
+            color: #ffffff;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .full {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #cbd5e1;
+            font-size: 14px;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            background: #0c1219;
+            color: #ffffff;
+            border: 1px solid #344150;
+            border-radius: 9px;
+            padding: 13px 14px;
+            outline: none;
+            font-size: 14px;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: #e50914;
+        }
+
+        textarea {
+            min-height: 130px;
+            resize: vertical;
+        }
+
+        input[type="file"] {
+            padding: 11px;
+        }
+
+        .image-info {
+            color: #8290a0;
+            font-size: 12px;
+            margin-top: 7px;
+        }
+
+        .preview {
+            display: none;
+            margin-top: 15px;
+        }
+
+        .preview img {
+            width: 180px;
+            height: 130px;
+            object-fit: cover;
+            border-radius: 10px;
+            border: 1px solid #344150;
+        }
+
+        /* BUTTON */
+
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: #e50914;
+            border: none;
+            border-radius: 9px;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .submit-btn:hover {
+            background: #f6121d;
+        }
+
+        .submit-btn:disabled {
+            background: #5d2226;
+            cursor: not-allowed;
+        }
+
+        /* RESULT */
+
+        .result {
+            display: none;
+            margin-top: 25px;
+            padding: 20px;
+            border-radius: 12px;
+            background: #102217;
+            border: 1px solid #245a35;
+        }
+
+        .result h3 {
+            color: #42d77d;
+            margin-bottom: 12px;
+        }
+
+        .complaint-id {
+            font-size: 22px;
+            font-weight: bold;
+            color: #ffffff;
+            margin: 10px 0;
+        }
+
+        .error {
+            display: none;
+            margin-top: 20px;
+            padding: 15px;
+            background: #2a1114;
+            border: 1px solid #7c252b;
+            color: #ff7b83;
+            border-radius: 9px;
+        }
+
+        /* FOOTER */
+
+        footer {
+            text-align: center;
+            color: #657384;
+            padding: 30px 20px;
+            font-size: 13px;
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 700px) {
+
+            header {
+                padding: 15px;
+            }
+
+            .admin-link {
+                display: none;
+            }
+
+            .container {
+                margin: 25px auto;
+                padding: 0 14px;
+            }
+
+            .hero h2 {
+                font-size: 25px;
+            }
+
+            .card {
+                padding: 20px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+
+            .full {
+                grid-column: auto;
+            }
+
+            .logo h1 {
+                font-size: 17px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+
+    <div class="logo">
+
+        <div class="logo-box">
+            P
+        </div>
+
+        <div>
+            <h1>Pune Municipal Corporation</h1>
+            <p>Citizen Complaint Portal</p>
+        </div>
+
+    </div>
+
+    <a class="admin-link"
+       href="complaints_management.html">
+        Admin Dashboard
+    </a>
+
+</header>
+
+
+<main class="container">
+
+    <div class="hero">
+
+        <h2>Report a Municipal Problem</h2>
+
+        <p>
+            Help improve Pune by reporting garbage,
+            potholes, drainage, streetlight and road problems.
+        </p>
+
+    </div>
+
+
+    <div class="card">
+
+        <h3 class="section-title">
+            Submit Your Complaint
+        </h3>
+
+
+        <form id="complaintForm">
+
+            <div class="form-grid">
+
+
+                <!-- NAME -->
+
+                <div class="form-group">
+
+                    <label for="name">
+                        Full Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="name"
+                        placeholder="Enter your name"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- MOBILE -->
+
+                <div class="form-group">
+
+                    <label for="mobile">
+                        Mobile Number
+                    </label>
+
+                    <input
+                        type="tel"
+                        id="mobile"
+                        placeholder="10 digit mobile number"
+                        maxlength="10"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- EMAIL -->
+
+                <div class="form-group">
+
+                    <label for="email">
+                        Email Address
+                    </label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        placeholder="Enter your email"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- LOCATION -->
+
+                <div class="form-group">
+
+                    <label for="location">
+                        Complaint Location
+                    </label>
+
+                    <select id="location" required>
+
+                        <option value="">
+                            Select location
+                        </option>
+
+                        <option value="Shivajinagar">
+                            Shivajinagar
+                        </option>
+
+                        <option value="Sinhagad Road">
+                            Sinhagad Road
+                        </option>
+
+                        <option value="Kothrud">
+                            Kothrud
+                        </option>
+
+                        <option value="Hadapsar">
+                            Hadapsar
+                        </option>
+
+                        <option value="Pimpri-Chinchwad">
+                            Pimpri-Chinchwad
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- DESCRIPTION -->
+
+                <div class="form-group full">
+
+                    <label for="description">
+                        Complaint Description
+                    </label>
+
+                    <textarea
+                        id="description"
+                        placeholder="Describe the municipal problem..."
+                        required
+                    ></textarea>
+
+                </div>
+
+
+                <!-- IMAGE -->
+
+                <div class="form-group full">
+
+                    <label for="image">
+                        Upload Problem Image
+                    </label>
+
+                    <input
+                        type="file"
+                        id="image"
+                        accept="image/jpeg,image/jpg,image/png"
+                        required
+                    >
+
+                    <div class="image-info">
+                        Upload one image. Maximum size: 6 MB.
+                    </div>
+
+
+                    <div class="preview" id="preview">
+
+                        <img id="previewImage" src="" alt="Image preview">
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="submit-btn"
+                id="submitBtn"
+            >
+                Submit Complaint
+            </button>
+
+        </form>
+
+
+        <!-- ERROR -->
+
+        <div
+            class="error"
+            id="errorBox">
+        </div>
+
+
+        <!-- SUCCESS -->
+
+        <div
+            class="result"
+            id="resultBox">
+
+            <h3>
+                Complaint Submitted Successfully
+            </h3>
+
+            <p>
+                Your complaint has been registered.
+            </p>
+
+            <div class="complaint-id" id="complaintId">
+            </div>
+
+            <p>
+                Please save this Complaint ID for tracking.
+            </p>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+<footer>
+
+    Pune Municipal Complaint Management System
+
+</footer>
+
+
+<script>
+
+const API_URL =
+"https://n7pjpuzjd0.execute-api.ap-south-1.amazonaws.com/dev/complaints";
+
+
+const MAX_SIZE =
+6 * 1024 * 1024;
+
+
+// IMAGE PREVIEW
+
+document
+.getElementById("image")
+.addEventListener("change", function () {
+
+    const file = this.files[0];
+
+    if (!file) {
+        return;
+    }
+
+    if (file.size > MAX_SIZE) {
+
+        alert("Image must be smaller than 6 MB.");
+
+        this.value = "";
+
+        document
+        .getElementById("preview")
+        .style.display = "none";
+
+        return;
+    }
+
+
+    const reader = new FileReader();
+
+    reader.onload = function (event) {
+
+        document
+        .getElementById("previewImage")
+        .src = event.target.result;
+
+        document
+        .getElementById("preview")
+        .style.display = "block";
+
+    };
+
+    reader.readAsDataURL(file);
+
+});
+
+
+// FORM SUBMIT
+
+document
+.getElementById("complaintForm")
+.addEventListener("submit", async function (event) {
+
+    event.preventDefault();
+
+
+    const submitBtn =
+    document.getElementById("submitBtn");
+
+    const errorBox =
+    document.getElementById("errorBox");
+
+    const resultBox =
+    document.getElementById("resultBox");
+
+
+    errorBox.style.display = "none";
+    resultBox.style.display = "none";
+
+
+    const file =
+    document.getElementById("image").files[0];
+
+
+    if (!file) {
+
+        showError("Please select an image.");
+
+        return;
+    }
+
+
+    if (file.size > MAX_SIZE) {
+
+        showError("Image must be smaller than 6 MB.");
+
+        return;
+    }
+
+
+    submitBtn.disabled = true;
+
+    submitBtn.textContent =
+    "Submitting Complaint...";
+
+
+    try {
+
+
+        // STEP 1
+        // CREATE COMPLAINT
+
+        const complaintData = {
+
+            name:
+            document.getElementById("name").value.trim(),
+
+            mobile:
+            document.getElementById("mobile").value.trim(),
+
+            email:
+            document.getElementById("email").value.trim(),
+
+            location:
+            document.getElementById("location").value,
+
+            description:
+            document.getElementById("description").value.trim(),
+
+            imageName:
+            "complaint.jpg"
+
+        };
+
+
+        const createResponse =
+        await fetch(API_URL, {
+
+            method: "POST",
+
+            headers: {
+                "Content-Type":
+                "application/json"
+            },
+
+            body:
+            JSON.stringify(complaintData)
+
+        });
+
+
+        if (!createResponse.ok) {
+
+            throw new Error(
+                "Could not create complaint."
+            );
+
+        }
+
+
+        const createData =
+        await createResponse.json();
+
+
+        console.log(
+            "Complaint created:",
+            createData
+        );
+
+
+        const complaintId =
+        createData.complaintId;
+
+
+        const uploadUrl =
+        createData.uploadUrl;
+
+
+        if (!complaintId || !uploadUrl) {
+
+            throw new Error(
+                "API did not return complaint ID or upload URL."
+            );
+
+        }
+
+
+        // STEP 2
+        // UPLOAD IMAGE TO S3
+
+        submitBtn.textContent =
+        "Uploading Image...";
+
+
+        const uploadResponse =
+        await fetch(uploadUrl, {
+
+            method: "PUT",
+
+            headers: {
+
+                "Content-Type":
+                "image/jpeg"
+
+            },
+
+            body: file
+
+        });
+
+
+        if (!uploadResponse.ok) {
+
+            throw new Error(
+                "Image upload failed."
+            );
+
+        }
+
+
+        // SUCCESS
+
+        submitBtn.textContent =
+        "Complaint Submitted";
+
+
+        document
+        .getElementById("complaintId")
+        .textContent =
+        complaintId;
+
+
+        resultBox.style.display =
+        "block";
+
+
+        document
+        .getElementById("complaintForm")
+        .reset();
+
+
+        document
+        .getElementById("preview")
+        .style.display =
+        "none";
+
+
+        resultBox
+        .scrollIntoView({
+            behavior: "smooth"
+        });
+
+
+    } catch (error) {
+
+        console.error(error);
+
+        showError(
+            error.message ||
+            "Something went wrong."
+        );
+
+        submitBtn.disabled = false;
+
+        submitBtn.textContent =
+        "Submit Complaint";
+
+        return;
+
+    }
+
+
+    submitBtn.disabled = false;
+
+});
+
+
+// ERROR FUNCTION
+
+function showError(message) {
+
+    const errorBox =
+    document.getElementById("errorBox");
+
+    errorBox.textContent =
+    message;
+
+    errorBox.style.display =
+    "block";
+
+}
+
+</script>
+
+</body>
+</html>
