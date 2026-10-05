@@ -99,3 +99,8 @@ If the backend API endpoints are no longer intended for public use, update or re
 - Real-time complaint tracking
 - Mobile application
 - Additional AI classification capabilities
+
+<img width="1865" height="913" alt="Screenshot 2026-10-06 014137" src="https://github.com/user-attachments/assets/d13c3bcf-2619-43b2-9b5e-d73d9fdf738a" />
+<img width="1880" height="903" alt="Screenshot 2026-10-06 014158" src="https://github.com/user-attachments/assets/ee8a8e4f-e273-49d3-902b-384659559949" />
+
+
